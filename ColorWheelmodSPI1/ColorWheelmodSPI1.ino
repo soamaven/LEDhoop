@@ -51,7 +51,7 @@ static float DELAY;
 static bool CONNECTED = false;
 static int FUNCTION = 127;
 void setup() {
-  SPI.setFrequency(8000);
+  //SPI.setFrequency(8000);
   pinMode(DATA_PIN, OUTPUT);
   pinMode(CLOCK_PIN, OUTPUT);
   
@@ -88,9 +88,9 @@ void loop() {
   if(CONNECTED){
    functionChooser(FUNCTION);
   }
-  else if(!CONNECTED){
-    RFduino_ULPDelay(INFINITE);
-  }
+  //else if(!CONNECTED){
+  //  RFduino_ULPDelay(INFINITE);
+  //}
 }
 
 void RFduinoBLE_onConnect() {
