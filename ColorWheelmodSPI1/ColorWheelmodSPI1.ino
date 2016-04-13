@@ -51,23 +51,28 @@ static float DELAY;
 static bool CONNECTED = false;
 static int FUNCTION = 127;
 void setup() {
-  SPI.setFrequency(24000);
+//  SPI.setFrequency(4000);
+//  SPI.setBitOrder(MSBFIRST);
+//  SPI.setClockDivider(0x06);
   pinMode(DATA_PIN, OUTPUT);
   pinMode(CLOCK_PIN, OUTPUT);
   
   // Create the FastLED object
-  FastLED.addLeds< APA102, DATA_PIN, CLOCK_PIN, RGB, DATA_RATE_MHZ(24)>(leds, NUM_LEDS);
+  FastLED.addLeds< APA102, DATA_PIN, CLOCK_PIN, RGB>(leds, NUM_LEDS);
   //FastLED.setBrightness( 255 );
   // Flash the strip on
   int SDELAY = 1000;
   wholeStrip(CRGB::White);FastLED.show(); delay(SDELAY);
+  
   wholeStrip(CRGB::Blue); FastLED.show(); delay(SDELAY);
+  wholeStrip(CRGB(60,46,126));FastLED.show();delay(SDELAY);
+  wholeStrip(CRGB::HotPink);FastLED.show();delay(SDELAY);
   wholeStrip(CRGB::Red);FastLED.show();delay(SDELAY);
   wholeStrip(CRGB::Green);FastLED.show();delay(SDELAY);
   wholeStrip(CRGB(0,127,0));FastLED.show();delay(SDELAY);
   wholeStrip(CRGB(0,127,127));FastLED.show();delay(SDELAY);
   wholeStrip(CRGB(127,0,127));FastLED.show();delay(SDELAY);
-  wholeStrip(CRGB(127,127,0));FastLED.show();delay(SDELAY);
+  wholeStrip(CRGB(60,46,126));FastLED.show();delay(SDELAY);
   wholeStrip(CRGB::Black);FastLED.show();delay(SDELAY);
   
   // setup the leds Define the for output
