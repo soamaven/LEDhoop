@@ -51,20 +51,25 @@ static float DELAY;
 static bool CONNECTED = false;
 static int FUNCTION = 127;
 void setup() {
-  //SPI.setFrequency(8000);
+  SPI.setFrequency(24000);
   pinMode(DATA_PIN, OUTPUT);
   pinMode(CLOCK_PIN, OUTPUT);
   
   // Create the FastLED object
-  FastLED.addLeds< APA102, DATA_PIN, CLOCK_PIN, RGB>(leds, NUM_LEDS);
-  FastLED.setBrightness( 50 );
-  FastLED.setMaxRefreshRate(650);
+  FastLED.addLeds< APA102, DATA_PIN, CLOCK_PIN, RGB, DATA_RATE_MHZ(24)>(leds, NUM_LEDS);
+  //FastLED.setBrightness( 255 );
   // Flash the strip on
-  wholeStrip(CRGB::White);FastLED.show(); delay(200);
-  wholeStrip(CRGB::Blue); FastLED.show(); interrupts();delay(200);
-  wholeStrip(CRGB::Red);FastLED.show();delay(200);
-  wholeStrip(CRGB::Green);FastLED.show();delay(200);
-  wholeStrip(CRGB::Black);FastLED.show();delay(200);
+  int SDELAY = 1000;
+  wholeStrip(CRGB::White);FastLED.show(); delay(SDELAY);
+  wholeStrip(CRGB::Blue); FastLED.show(); delay(SDELAY);
+  wholeStrip(CRGB::Red);FastLED.show();delay(SDELAY);
+  wholeStrip(CRGB::Green);FastLED.show();delay(SDELAY);
+  wholeStrip(CRGB(0,127,0));FastLED.show();delay(SDELAY);
+  wholeStrip(CRGB(0,127,127));FastLED.show();delay(SDELAY);
+  wholeStrip(CRGB(127,0,127));FastLED.show();delay(SDELAY);
+  wholeStrip(CRGB(127,127,0));FastLED.show();delay(SDELAY);
+  wholeStrip(CRGB::Black);FastLED.show();delay(SDELAY);
+  
   // setup the leds Define the for output
   
 
@@ -135,7 +140,11 @@ void RFduinoBLE_onReceive(char *data, int len) {
       SPEED = (float)*g1;
       DELAY = 100000 / pow(500,(SPEED / 255) +1 );
       FUNCTION = (int)*b1;
-      FastLED.setBrightness( *r1);
+      // Try to manually set brightness
+      //*r = (int)(*r1 / 254.) * (*r)%1;
+      //*g = (int)(*r1 / 254.) * (*r)%1;
+      //*b = (int)(*r1 / 254.) * (*r)%1;
+      //FastLED.setBrightness( *r1);
     }
   }
   delay(20);
@@ -217,4 +226,4 @@ static void rainbow_HSV() {
     delay(DELAY);
   }
 }
-  
+
